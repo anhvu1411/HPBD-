@@ -1,0 +1,68 @@
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Lucy</title>
+<style>
+  body {
+    background: black;
+    color: #ffccff;
+    font-family: "Courier New", monospace;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 10%;
+    white-space: pre-line;
+  }
+  .typing {
+    display: inline-block;
+    border-right: 2px solid #fff;
+    overflow: hidden;
+    animation: typing 12s steps(80, end), blink .75s step-end infinite;
+    white-space: nowrap;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+  }
+</style>
+</head>
+<body>
+  <div class="typing">
+Happy Birthday, Lucy (English)
+Chúc mừng sinh nhật, Lucy (Vietnamese)
+عيد ميلاد سعيد، لوسي (Arabic)
+Joyeux anniversaire, Lucy (French)
+Alles Gute zum Geburtstag, Lucy (German)
+Feliz cumpleaños, Lucy (Spanish)
+Feliz aniversário, Lucy (Portuguese)
+Buon compleanno, Lucy (Italian)
+С днём рождения, Люси (Russian)
+生日快乐，露西 (Chinese - Simplified)
+生日快樂，露西 (Chinese - Traditional)
+ルーシー、お誕生日おめでとう (Japanese)
+생일 축하해, 루시 (Korean)
+जन्मदिन मुबारक हो, लूसी (Hindi)
+শুভ জন্মদিন, লুসি (Bengali)
+Doğum günün kutlu olsun, Lucy (Turkish)
+สุขสันต์วันเกิด, ลูซี่ (Thai)
+Χαρούμενα γενέθλια, Λούσι (Greek)
+יום הולדת שמח, לוסי (Hebrew)
+تولدت مبارک، لوسی (Persian)
+Selamat ulang tahun, Lucy (Indonesian)
+Selamat hari jadi, Lucy (Malay)
+Všechno nejlepší k narozeninám, Lucy (Czech)
+Grattis på födelsedagen, Lucy (Swedish)
+Hyvää syntymäpäivää, Lucy (Finnish)
+Palju õnne sünnipäevaks, Lucy (Estonian)
+Boldog születésnapot, Lucy (Hungarian)
+Sto lat, Lucy (Polish)
+La mulți ani, Lucy (Romanian)
+  </div>
+</body>
+</html>

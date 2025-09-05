@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Lucy</title>
+<style>
+  body {
+    background: black;
+    color: #ffccff;
+    font-family: "Courier New", monospace;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 10%;
+    white-space: pre-line;
+  }
+  .typing {
+    display: inline-block;
+    border-right: 2px solid #fff;
+    overflow: hidden;
+    animation: typing 12s steps(80, end), blink .75s step-end infinite;
+    white-space: nowrap;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+  }
+</style>
+</head>
+<body>
+  <div class="typing">
+Happy Birthday, Lucy 
+Chúc mừng sinh nhật, Lucy 
+عيد ميلاد سعيد، لوسي 
+Joyeux anniversaire, Lucy 
+Alles Gute zum Geburtstag, Lucy 
+Feliz cumpleaños, Lucy 
+Feliz aniversário, Lucy 
+Buon compleanno, Lucy 
+С днём рождения, Люси
+生日快乐，露西
+生日快樂，露西 
+ルーシー、お誕生日おめでとう 
+생일 축하해, 루시
+जन्मदिन मुबारक हो, लूसी 
+শুভ জন্মদিন, লুসি 
+Doğum günün kutlu olsun, Lucy 
+สุขสันต์วันเกิด, ลูซี่ 
+Χαρούμενα γενέθλια, Λούσι 
+יום הולדת שמח, לוסי 
+تولدت مبارک، لوسی 
+Selamat ulang tahun, Lucy 
+Selamat hari jadi, Lucy 
+Všechno nejlepší k narozeninám, Lucy 
+Grattis på födelsedagen, Lucy 
+Hyvää syntymäpäivää, Lucy 
+Palju õnne sünnipäevaks, Lucy 
+Boldog születésnapot, Lucy 
+Sto lat, Lucy 
+La mulți ani, Lucy 
+  </div>
+</body>
+</html>

@@ -3,63 +3,170 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Happy Birthday Lucy</title>
+<title>Happy Birthday Lucy — 29 wishes</title>
 <style>
   :root{
-    --typing-speed:40;       /* ms / ký tự */
-    --hold-time:900;         /* giữ sau khi gõ xong (ms) */
-    --fade-time:450;         /* thời gian mờ dần (ms) */
-    --font-size:clamp(26px, 6vw, 64px);
+    --font-size: clamp(18px, 3.6vw, 30px);
+    --line-gap: 12px;
+    --card-bg: rgba(255,255,255,.06);
+    --card-br: 16px;
+    --wish-gradient: linear-gradient(270deg,#ff4d6d,#f7aef8,#9b5de5,#00bbf9,#00f5d4,#ff4d6d);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; background:#000;
-    display:grid; place-items:center;
+    margin:0; background:#07060a; color:#fff;
     font-family:"Segoe UI",system-ui,-apple-system,Arial,"Noto Color Emoji",sans-serif;
+    overflow:hidden;  /* chúng ta dùng vùng scroll riêng cho danh sách */
   }
-  .wrap{ width:min(92vw,1000px); text-align:center; padding:2rem; }
-  .heart{
-    position:fixed; inset:0; display:grid; place-items:center;
-    pointer-events:none; opacity:.12; filter:blur(1px);
-    font-size:clamp(120px, 35vw, 420px); line-height:0;
+
+  /* Pháo hoa ở lớp dưới cùng */
+  canvas#fx{position:fixed; inset:0; z-index:0; background: radial-gradient(circle at 50% 15%, #1a132b 0%, #0c0b12 60%, #07060a 100%);}
+
+  /* Vùng nội dung chính */
+  .stage{
+    position:relative; z-index:2; height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:16px 16px 120px;
   }
-  .line{
-    display:inline-block;
-    font-weight:700; letter-spacing:.5px;
-    font-size:var(--font-size);
-    background:linear-gradient(270deg,#ff4d6d,#f7aef8,#9b5de5,#00bbf9,#00f5d4,#ff4d6d);
+
+  /* Header */
+  .hdr{
+    margin-top:10px;
+    display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
+    text-align:center;
+  }
+  .title{
+    font-weight:800; letter-spacing:.4px; margin:0;
+    font-size: clamp(22px, 4.5vw, 42px);
+    background: var(--wish-gradient); background-size:1200% 1200%;
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation: grad 12s ease infinite;
+    text-shadow: 0 0 24px rgba(255,255,255,.18);
+  }
+  .count{
+    padding:.35rem .7rem; border:1px solid rgba(255,255,255,.2);
+    border-radius:999px; font-weight:600; font-size:14px; opacity:.85;
+    backdrop-filter: blur(6px); background: rgba(255,255,255,.06);
+  }
+  @keyframes grad{
+    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+  }
+
+  /* Hàng nút */
+  .controls{
+    display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; justify-content:center;
+  }
+  button.ui{
+    border:1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.08);
+    color:#fff; padding:.6rem .9rem; border-radius:10px; cursor:pointer; font-weight:600;
+    transition: transform .06s ease; backdrop-filter: blur(6px);
+  }
+  button.ui:active{ transform: scale(.98) }
+
+  /* Khu danh sách tích lũy */
+  .list-wrap{
+    width:min(960px, 94vw);
+    margin-top:14px;
+    background: var(--card-bg);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius: var(--card-br);
+    padding: 14px 14px;
+    overflow:auto;
+    flex: 1 1 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35) inset, 0 10px 30px rgba(0,0,0,.25);
+  }
+  .wishes{
+    display:flex; flex-direction:column; gap: var(--line-gap);
+    padding: 2px 2px 120px;  /* chừa chỗ cho bánh sinh nhật */
+  }
+  .wish{
+    font-size: var(--font-size);
+    font-weight:700; letter-spacing:.35px;
+    line-height:1.25;
+    background: var(--wish-gradient);
     background-size:1200% 1200%;
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation:gradient 12s ease infinite;
-    border-right:2px solid #fff; /* caret */
-    white-space:nowrap; overflow:hidden;
-    text-shadow:0 0 18px rgba(255,255,255,0.25);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation: grad 14s ease infinite;
+    text-shadow: 0 0 18px rgba(255,255,255,.2);
+    filter: drop-shadow(0 0 6px rgba(255,255,255,.08));
+    will-change: transform, opacity;
+    opacity:0; transform: translateY(10px) scale(.98);
+    word-break: break-word;
   }
-  @keyframes gradient{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  .wish.rtl{ direction: rtl }
+  .wish.in{ animation: fadeInUp .55s ease forwards }
+  @keyframes fadeInUp{
+    to { opacity:1; transform: translateY(0) scale(1) }
   }
-  .fade-out{ animation:fade var(--fade-time) ease forwards }
-  @keyframes fade{ to{ opacity:0; filter:blur(2px) } }
-  .rtl{ direction: rtl } /* cho tiếng Ả Rập/Hebrew/Persian */
-  .credit{
-    position:fixed; bottom:14px; width:100%; text-align:center;
-    font-size:12px; letter-spacing:.2px; opacity:.5; color:#aaa;
+
+  /* Bánh sinh nhật đáy */
+  .cake{
+    position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
+    width:min(360px, 70vw); z-index:1; opacity:.95;
   }
+  .flame{ transform-origin:center; animation: flame .9s ease-in-out infinite }
+  @keyframes flame{
+    0%,100%{ transform: scale(1) translateY(0) }
+    50%{ transform: scale(1.06) translateY(-1px) }
+  }
+
+  /* Nút bật nhạc nếu bị chặn autoplay */
+  .sound-btn{
+    position:fixed; right:16px; bottom:16px; z-index:3;
+    background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25);
+    padding:.7rem 1rem; border-radius:999px; backdrop-filter:blur(6px);
+    cursor:pointer; font-weight:600;
+  }
+  .hidden{display:none}
 </style>
 </head>
 <body>
-  <div class="heart">❤</div>
-  <div class="wrap">
-    <span id="text" class="line"></span>
+  <!-- Pháo hoa -->
+  <canvas id="fx"></canvas>
+
+  <!-- Nội dung -->
+  <div class="stage">
+    <div class="hdr">
+      <h1 class="title">Happy Birthday, Lucy</h1>
+      <span id="count" class="count">0 / 29</span>
+    </div>
+    <div class="controls">
+      <button id="skip" class="ui">Hiện nhanh câu tiếp theo</button>
+      <button id="showAll" class="ui">Hiện tất cả còn lại</button>
+      <button id="replay" class="ui">Chạy lại từ đầu</button>
+    </div>
+
+    <div class="list-wrap">
+      <div id="wishes" class="wishes"></div>
+    </div>
   </div>
-  <div class="credit">Happy Birthday, Lucy — multilingual wishes</div>
+
+  <!-- Bánh sinh nhật SVG (nến nhấp nháy) -->
+  <svg class="cake" viewBox="0 0 600 220" aria-hidden="true">
+    <!-- Đĩa -->
+    <ellipse cx="300" cy="200" rx="220" ry="16" fill="rgba(255,255,255,.08)"/>
+    <!-- Thân bánh -->
+    <rect x="120" y="110" width="360" height="70" rx="14" fill="#ffb3c1"/>
+    <rect x="140" y="95"  width="320" height="40" rx="12" fill="#ffd6ff"/>
+    <!-- Kem lượn -->
+    <path d="M140,120 q20,20 40,0 t40,0 t40,0 t40,0 t40,0 t40,0 q20,20 40,0 v15 h-320z" fill="#fff"/>
+    <!-- Nến -->
+    <g transform="translate(300,85)">
+      <rect x="-6" y="10" width="12" height="35" rx="3" fill="#9b5de5"/>
+      <!-- Lửa -->
+      <path class="flame" d="M0,0 C-6,-10 -6,-18 0,-24 C6,-18 6,-10 0,0Z" fill="#ffd166" stroke="#ff9f1c" stroke-width="1"/>
+    </g>
+  </svg>
+
+  <!-- Nhạc nền (tùy chọn): thay AUDIO_SRC_HERE bằng link RAW mp3 của bạn -->
+  <audio id="bgm" src="AUDIO_SRC_HERE" autoplay loop playsinline></audio>
+  <button id="soundBtn" class="sound-btn hidden">🔊 Tap for music</button>
 
 <script>
-const wishes = [
+/* ========== 29 câu chúc (không chú thích ngôn ngữ) ========== */
+const DATA = [
   { t:"Happy Birthday, Lucy" },
   { t:"Chúc mừng sinh nhật, Lucy" },
   { t:"عيد ميلاد سعيد، لوسي", rtl:true },
@@ -91,45 +198,134 @@ const wishes = [
   { t:"La mulți ani, Lucy" },
 ];
 
-const el = document.getElementById('text');
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+const listEl = document.getElementById('wishes');
+const countEl = document.getElementById('count');
+const btnSkip = document.getElementById('skip');
+const btnAll  = document.getElementById('showAll');
+const btnReplay = document.getElementById('replay');
 
-async function typeLine(str, rtl){
-  el.classList.toggle('rtl', !!rtl);
-  el.textContent = '';
-  el.style.opacity = '1';
-  el.classList.remove('fade-out');
+let idx = 0, running = false, revealAllFast = false;
 
-  for(let i=0;i<str.length;i++){
-    el.textContent = str.slice(0,i+1);
-    await sleep(getTypingSpeed(str[i]));
+function updateCount(){
+  countEl.textContent = `${Math.min(idx, DATA.length)} / ${DATA.length}`;
+}
+
+function addWish(item){
+  const div = document.createElement('div');
+  div.className = 'wish';
+  if(item.rtl) div.classList.add('rtl');
+  div.textContent = item.t;
+  listEl.appendChild(div);
+  // trigger animation
+  requestAnimationFrame(()=> div.classList.add('in'));
+  // auto-scroll xuống dòng mới
+  listEl.parentElement.scrollTop = listEl.parentElement.scrollHeight;
+  updateCount();
+}
+
+async function playSequence(){
+  if(running) return;
+  running = true;
+  for(; idx < DATA.length; idx++){
+    addWish(DATA[idx]);
+    // nếu người dùng bấm "Hiện tất cả" thì bỏ delay
+    if(revealAllFast) continue;
+    // Delay giữa các câu (điều chỉnh nhanh/chậm tại đây)
+    await sleep(900);
   }
-  await sleep(getHoldTime(str.length));
-  el.classList.add('fade-out');
-  await sleep(parseFloat(getComputedStyle(document.documentElement)
-            .getPropertyValue('--fade-time')));
-  el.textContent = '';
-  el.classList.remove('fade-out');
+  running = false;
 }
-function getTypingSpeed(ch){
-  const base = parseInt(getCSSVar('--typing-speed'),10);
-  return /\s/.test(ch) ? base*1.2 : base;
+
+btnSkip.onclick = ()=>{
+  if(idx < DATA.length){
+    addWish(DATA[idx]);
+    idx++;
+    // nếu đang chạy chậm, vẫn tiếp tục; nếu đã xong thì thôi
+    if(!running) playSequence();
+  }
+};
+btnAll.onclick = ()=>{
+  revealAllFast = true;
+  if(!running) playSequence();
+};
+btnReplay.onclick = ()=>{
+  idx = 0; revealAllFast = false; running = false;
+  listEl.innerHTML = '';
+  updateCount();
+  playSequence();
+};
+
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+updateCount();
+playSequence();
+
+/* ====== Pháo hoa canvas siêu gọn ====== */
+const c = document.getElementById('fx');
+const ctx = c.getContext('2d', { alpha: true });
+let W, H, dpr = Math.min(window.devicePixelRatio||1, 2);
+function resize(){
+  W = c.width = Math.floor(innerWidth * dpr);
+  H = c.height = Math.floor(innerHeight * dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-function getHoldTime(len){
-  const hold = parseInt(getCSSVar('--hold-time'),10);
-  return hold + Math.min(1200, len*18);
-}
-function getCSSVar(name){
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '0';
-}
-async function run(){
-  while(true){
-    for(const item of wishes){
-      await typeLine(item.t, item.rtl);
-    }
+addEventListener('resize', resize); resize();
+
+const sparks = [];
+function burst(x,y,colors){
+  const N = 60 + Math.random()*40;
+  for(let i=0;i<N;i++){
+    const a = Math.random()*Math.PI*2;
+    const v = 2 + Math.random()*4;
+    sparks.push({
+      x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 2,
+      life: 60+Math.random()*30, age:0,
+      color: colors[Math.floor(Math.random()*colors.length)]
+    });
   }
 }
-run();
+function loop(){
+  ctx.fillStyle = 'rgba(7,6,10,0.25)';
+  ctx.fillRect(0,0,innerWidth,innerHeight);
+  for(let i=sparks.length-1;i>=0;i--){
+    const p = sparks[i];
+    p.age++; p.x += p.vx; p.y += p.vy; p.vy += 0.04; // gravity
+    const t = 1 - p.age/p.life;
+    if(t<=0){ sparks.splice(i,1); continue; }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2.2*t + 0.6, 0, Math.PI*2);
+    ctx.fillStyle = p.color; ctx.globalAlpha = Math.max(t, .15);
+    ctx.fill(); ctx.globalAlpha = 1;
+  }
+  requestAnimationFrame(loop);
+}
+loop();
+
+// Tự bắn pháo hoa định kỳ + khi người dùng chạm/click
+const palette = [
+  '#ff4d6d','#f7aef8','#9b5de5','#00bbf9','#00f5d4','#ffd166','#ff9f1c'
+];
+setInterval(()=>{
+  burst(Math.random()*innerWidth, innerHeight*(.25+.5*Math.random()), palette);
+}, 1100);
+addEventListener('click', e=> burst(e.clientX, e.clientY, palette));
+addEventListener('touchstart', e=>{
+  const t = e.touches[0]; burst(t.clientX, t.clientY, palette);
+},{passive:true});
+
+/* ====== Audio: xử lý autoplay ====== */
+const audio = document.getElementById('bgm');
+const btn = document.getElementById('soundBtn');
+if(audio){
+  audio.volume = 0.6;
+  const tryPlay = () => audio.play().then(()=> btn.classList.add('hidden')).catch(()=> btn.classList.remove('hidden'));
+  const unlock = ()=>{ tryPlay(); removeEventListener('touchstart', unlock); removeEventListener('click', unlock); };
+  tryPlay();
+  addEventListener('touchstart', unlock, {once:true});
+  addEventListener('click', unlock, {once:true});
+  btn && btn.addEventListener('click', tryPlay);
+  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && audio.paused) tryPlay(); });
+}
 </script>
 </body>
 </html>

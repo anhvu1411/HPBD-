@@ -23,55 +23,33 @@
   canvas#fx{position:fixed; inset:0; z-index:0;
     background: radial-gradient(circle at 50% 15%, #1a132b 0%, #0c0b12 60%, #07060a 100%);
   }
-  .stage{
-    position:relative; z-index:2; height:100%;
-    display:flex; flex-direction:column; align-items:center; padding:16px 16px 120px;
-  }
-  .hdr{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center; margin-top:6px; }
-  .title{
-    margin:0; font-weight:900; letter-spacing:.4px;
-    font-size: clamp(22px, 4.8vw, 46px);
-    background:var(--grad); background-size:1200% 1200%;
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    animation:grad 12s ease infinite; text-shadow:0 0 24px rgba(255,255,255,.18);
-  }
-  .count{ padding:.35rem .7rem; border:1px solid rgba(255,255,255,.2); border-radius:999px; font-weight:600; font-size:14px; opacity:.85; backdrop-filter: blur(6px); background: rgba(255,255,255,.06); }
+  .stage{position:relative; z-index:2; height:100%; display:flex; flex-direction:column; align-items:center; padding:16px 16px 120px;}
+  .hdr{display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center; margin-top:6px;}
+  .title{margin:0; font-weight:900; letter-spacing:.4px; font-size:clamp(22px,4.8vw,46px);
+    background:var(--grad); background-size:1200% 1200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation:grad 12s ease infinite; text-shadow:0 0 24px rgba(255,255,255,.18);}
+  .count{padding:.35rem .7rem; border:1px solid rgba(255,255,255,.2); border-radius:999px; font-weight:600; font-size:14px; opacity:.85; backdrop-filter:blur(6px); background:rgba(255,255,255,.06);}
   @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  .controls{ display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; justify-content:center; }
-  button.ui{ border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; padding:.6rem .9rem; border-radius:10px; cursor:pointer; font-weight:600; transition:transform .06s ease; backdrop-filter:blur(6px) }
-  button.ui:active{ transform:scale(.98) }
-  .panel{
-    width:min(960px,94vw); margin-top:14px; background:var(--card-bg);
-    border:1px solid rgba(255,255,255,.08); border-radius:var(--br);
-    padding:16px; flex:1 1 auto; overflow:auto;
-    box-shadow:0 10px 30px rgba(0,0,0,.35) inset, 0 10px 30px rgba(0,0,0,.25);
-  }
-  .lead{
-    text-align:center; margin:2px 0 12px 0; font-weight:900;
-    font-size:var(--font-lead);
-    background:var(--grad); background-size:1200% 1200%;
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    animation:grad 14s ease infinite;
-    text-shadow:0 0 18px rgba(255,255,255,.2);
-  }
-  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 22px; align-items:start; }
-  @media (max-width:700px){ .grid{ grid-template-columns:1fr; } }
-  .wish{
-    font-size:var(--font-wish); font-weight:800; line-height:1.24; letter-spacing:.35px;
-    background:var(--grad); background-size:1200% 1200%;
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    animation:grad 16s ease infinite;
-    text-shadow:0 0 18px rgba(255,255,255,.18);
-    opacity:0; transform: translateY(10px) scale(.98);
-    padding: 2px 6px; white-space: normal; word-break: keep-all; text-align: left;
-  }
-  .wish.rtl{ direction:rtl; text-align:right }
-  .wish.in{ animation:fadeIn .5s ease forwards }
-  @keyframes fadeIn{ to{ opacity:1; transform:translateY(0) scale(1) } }
-  .cake{ position:fixed; bottom:10px; left:50%; transform:translateX(-50%); width:min(360px,70vw); z-index:1; opacity:.95 }
-  .flame{ transform-origin:center; animation:flame .9s ease-in-out infinite }
-  @keyframes flame{ 0%,100%{transform:scale(1) translateY(0)} 50%{transform:scale(1.06) translateY(-1px)} }
-  .sound-btn{ position:fixed; right:16px; bottom:16px; z-index:3; background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25); padding:.7rem 1rem; border-radius:999px; backdrop-filter:blur(6px); cursor:pointer; font-weight:600 }
+  .controls{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; justify-content:center;}
+  button.ui{border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; padding:.6rem .9rem; border-radius:10px; cursor:pointer; font-weight:600; transition:transform .06s ease; backdrop-filter:blur(6px)}
+  button.ui:active{transform:scale(.98)}
+  .panel{width:min(960px,94vw); margin-top:14px; background:var(--card-bg); border:1px solid rgba(255,255,255,.08); border-radius:var(--br); padding:16px; flex:1 1 auto; overflow:auto; box-shadow:0 10px 30px rgba(0,0,0,.35) inset, 0 10px 30px rgba(0,0,0,.25);}
+  .lead{text-align:center; margin:2px 0 14px 0; font-weight:900; font-size:var(--font-lead);
+    background:var(--grad); background-size:1200% 1200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation:grad 14s ease infinite; text-shadow:0 0 18px rgba(255,255,255,.2);}
+  .cols{display:flex; gap:22px;}
+  .col{flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:12px;}
+  .wish{font-size:var(--font-wish); font-weight:800; line-height:1.25; letter-spacing:.35px;
+    background:var(--grad); background-size:1200% 1200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation:grad 16s ease infinite; text-shadow:0 0 18px rgba(255,255,255,.18);
+    opacity:0; transform:translateY(10px) scale(.98); padding:2px 6px; white-space:normal; word-break:break-word; text-align:left;}
+  .wish.rtl{direction:rtl; text-align:right}
+  .wish.in{animation:fadeIn .5s ease forwards}
+  @keyframes fadeIn{to{opacity:1; transform:translateY(0) scale(1)}}
+  .cake{position:fixed; bottom:10px; left:50%; transform:translateX(-50%); width:min(360px,70vw); z-index:1; opacity:.95}
+  .flame{transform-origin:center; animation:flame .9s ease-in-out infinite}
+  @keyframes flame{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.06) translateY(-1px)}}
+  .sound-btn{position:fixed; right:16px; bottom:16px; z-index:3; background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25); padding:.7rem 1rem; border-radius:999px; backdrop-filter:blur(6px); cursor:pointer; font-weight:600}
   .hidden{display:none}
 </style>
 </head>
@@ -88,48 +66,75 @@
       <button id="replay" class="ui">Chạy lại từ đầu</button>
     </div>
     <div class="panel" id="panel">
-      <div id="lead" class="lead">Chúc mừng sinh nhật, Lucy</div>
-      <div id="grid" class="grid"></div>
+      <div class="lead">Chúc mừng sinh nhật, Lucy</div>
+      <div class="cols"><div id="colL" class="col"></div><div id="colR" class="col"></div></div>
     </div>
   </div>
+
   <!-- cake svg -->
   <svg class="cake" viewBox="0 0 600 220" aria-hidden="true">
     <ellipse cx="300" cy="200" rx="220" ry="16" fill="rgba(255,255,255,.08)"/>
     <rect x="120" y="110" width="360" height="70" rx="14" fill="#ffb3c1"/>
-    <rect x="140" y="95"  width="320" height="40" rx="12" fill="#ffd6ff"/>
+    <rect x="140" y="95" width="320" height="40" rx="12" fill="#ffd6ff"/>
     <path d="M140,120 q20,20 40,0 t40,0 t40,0 t40,0 t40,0 t40,0 q20,20 40,0 v15 h-320z" fill="#fff"/>
     <g transform="translate(300,85)">
       <rect x="-6" y="10" width="12" height="35" rx="3" fill="#9b5de5"/>
       <path class="flame" d="M0,0 C-6,-10 -6,-18 0,-24 C6,-18 6,-10 0,0Z" fill="#ffd166" stroke="#ff9f1c" stroke-width="1"/>
     </g>
   </svg>
-  <!-- Nhạc Ukulele Happy Birthday -->
+
+  <!-- audio -->
   <audio id="bgm" autoplay loop playsinline preload="auto">
-    <source src="https://cdn.jsdelivr.net/gh/anhvu1411/HPBD-@main/happy-birthday.mp3" type="audio/mpeg">
+    <source src="https://cdn.jsdelivr.net/gh/anhvu1411/HPBD-@main/happy-birthday-ukulele-version-339062.mp3" type="audio/mpeg">
   </audio>
   <button id="soundBtn" class="sound-btn hidden">🔊 Tap for music</button>
+
 <script>
-/* dữ liệu chúc mừng */
-const DATA=[{t:"Happy Birthday, Lucy"},{t:"عيد ميلاد سعيد، لوسي",rtl:true},{t:"Joyeux anniversaire, Lucy"},{t:"Alles Gute zum Geburtstag, Lucy"},{t:"Feliz cumpleaños, Lucy"},{t:"Feliz aniversário, Lucy"},{t:"Buon compleanno, Lucy"},{t:"С днём рождения, Люси"},{t:"生日快乐，露西"},{t:"生日快樂，露西"},{t:"ルーシー、お誕生日おめでとう"},{t:"생일 축하해, 루시"},{t:"जन्मदिन मुबारक हो, लूसी"},{t:"শুভ জন্মদিন, লুসি"},{t:"Doğum günün kutlu olsun, Lucy"},{t:"สุขสันต์วันเกิด, ลูซี่"},{t:"Χαρούμενα γενέθλια, Λούσι"},{t:"יום הולדת שמח, לוסי",rtl:true},{t:"تولدت مبارک، لوسی",rtl:true},{t:"Selamat ulang tahun, Lucy"},{t:"Selamat hari jadi, Lucy"},{t:"Všechno nejlepší k narozeninám, Lucy"},{t:"Grattis på födelsedagen, Lucy"},{t:"Hyvää syntymäpäivää, Lucy"},{t:"Palju õnne sünnipäevaks, Lucy"},{t:"Boldog születésnapot, Lucy"},{t:"Sto lat, Lucy"},{t:"La mulți ani, Lucy"}];
-const grid=document.getElementById('grid'),panel=document.getElementById('panel'),countEl=document.getElementById('count');
+const LIST = [
+  { t:"Happy Birthday, Lucy"},{t:"Joyeux anniversaire, Lucy"},
+  {t:"Feliz cumpleaños, Lucy"},{t:"Buon compleanno, Lucy"},
+  {t:"生日快乐，露西"},{t:"ルーシー、お誕生日おめでとう"},
+  {t:"जन्मदिन मुबारक हो, लूसी"},{t:"Doğum günün kutlu olsun, Lucy"},
+  {t:"Selamat hari jadi, Lucy"},{t:"Grattis på födelsedagen, Lucy"},
+  {t:"Palju õnne sünnipäevaks, Lucy"},{t:"Sto lat, Lucy"},
+  {t:"Alles Gute zum Geburtstag, Lucy"},{t:"Feliz aniversário, Lucy"},
+  {t:"С днём рождения, Люси"},{t:"生日快樂，露西"},
+  {t:"생일 축하해, 루시"},{t:"শুভ জন্মদিন, লুসি"},
+  {t:"สุขสันต์วันเกิด, ลูซี่"},{t:"Χαρούμενα γενέθλια, Λούσι"},
+  {t:"Selamat ulang tahun, Lucy"},{t:"Všechno nejlepší k narozeninám, Lucy"},
+  {t:"Hyvää syntymäpäivää, Lucy"},{t:"Boldog születésnapot, Lucy"},
+  {t:"La mulți ani, Lucy"},
+  {t:"יום הולדת שמח, לוסי",rtl:true},
+  {t:"تولدت مبارک، لوسی",rtl:true},
+  {t:"عيد ميلاد سعيد، لوسي",rtl:true}
+]; // 28 wishes
+
+const colL=document.getElementById('colL'), colR=document.getElementById('colR'), countEl=document.getElementById('count');
 let idx=0,running=false,revealAll=false;
 function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-function updateCount(){countEl.textContent=`${1+grid.querySelectorAll('.wish').length} / 29`}
-function addWish(item){const d=document.createElement('div');d.className='wish';if(item.rtl)d.classList.add('rtl');d.textContent=(item.t||'').trim();grid.appendChild(d);requestAnimationFrame(()=>d.classList.add('in'));panel.scrollTop=panel.scrollHeight;updateCount()}
-async function play(){if(running)return;running=true;for(;idx<DATA.length;idx++){addWish(DATA[idx]);if(!revealAll)await sleep(700);}running=false}
-document.getElementById('skip').onclick=()=>{if(idx<DATA.length){addWish(DATA[idx]);idx++;}if(!running)play()};
-document.getElementById('showAll').onclick=()=>{revealAll=true;if(!running)play()};
-document.getElementById('replay').onclick=()=>{idx=0;revealAll=false;running=false;grid.innerHTML='';updateCount();play()};
+function updateCount(){const shown=1+colL.children.length+colR.children.length;countEl.textContent=`${shown} / 29`;}
+function makeWish(item){const d=document.createElement('div');d.className='wish';if(item.rtl)d.classList.add('rtl');d.textContent=item.t.trim();return d;}
+function addPair(L,R){if(L){const n=makeWish(L);colL.appendChild(n);requestAnimationFrame(()=>n.classList.add('in'));}if(R){const n=makeWish(R);colR.appendChild(n);requestAnimationFrame(()=>n.classList.add('in'));}updateCount();}
+async function play(){if(running)return;running=true;while(idx<LIST.length){const L=LIST[idx++],R=(idx<LIST.length)?LIST[idx++]:null;addPair(L,R);if(!revealAll)await sleep(700);}running=false;}
+document.getElementById('skip').onclick=()=>{if(idx<LIST.length){const L=LIST[idx++],R=(idx<LIST.length)?LIST[idx++]:null;addPair(L,R);}if(!running)play();}
+document.getElementById('showAll').onclick=()=>{revealAll=true;if(!running)play();}
+document.getElementById('replay').onclick=()=>{idx=0;revealAll=false;running=false;colL.innerHTML='';colR.innerHTML='';updateCount();play();}
 updateCount();play();
+
 /* fireworks */
 const c=document.getElementById('fx'),ctx=c.getContext('2d',{alpha:true});let W,H,dpr=Math.min(devicePixelRatio||1,2);
 function resize(){W=c.width=Math.floor(innerWidth*dpr);H=c.height=Math.floor(innerHeight*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}addEventListener('resize',resize);resize();
 const sparks=[],palette=['#ff4d6d','#f7aef8','#9b5de5','#00bbf9','#00f5d4','#ffd166','#ff9f1c'];
 function burst(x,y){const N=60+Math.random()*40;for(let i=0;i<N;i++){const a=Math.random()*Math.PI*2,v=2+Math.random()*4;sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,life:60+Math.random()*30,age:0,color:palette[(Math.random()*palette.length)|0]});}}
 function loop(){ctx.fillStyle='rgba(7,6,10,.25)';ctx.fillRect(0,0,innerWidth,innerHeight);for(let i=sparks.length-1;i>=0;i--){const p=sparks[i];p.age++;p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;const t=1-p.age/p.life;if(t<=0){sparks.splice(i,1);continue;}ctx.beginPath();ctx.arc(p.x,p.y,2.2*t+0.6,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(t,.15);ctx.fill();ctx.globalAlpha=1;}requestAnimationFrame(loop);}loop();setInterval(()=>burst(Math.random()*innerWidth,innerHeight*(.25+.5*Math.random())),1100);addEventListener('click',e=>burst(e.clientX,e.clientY));addEventListener('touchstart',e=>{const t=e.touches[0];burst(t.clientX,t.clientY)},{passive:true});
+
 /* audio autoplay */
-const audio=document.getElementById('bgm'),btn=document.getElementById('soundBtn');
-if(audio){audio.volume=.6;const tryPlay=()=>audio.play().then(()=>btn.classList.add('hidden')).catch(()=>btn.classList.remove('hidden'));const unlock=()=>{tryPlay();removeEventListener('touchstart',unlock);removeEventListener('click',unlock)};tryPlay();addEventListener('touchstart',unlock,{once:true});addEventListener('click',unlock,{once:true});btn&&btn.addEventListener('click',tryPlay);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&audio.paused)tryPlay()})}
+const audio=document.getElementById('bgm'),btn=document.getElementById('soundBtn');audio.volume=.7;
+function tryPlay(){return audio.play().then(()=>btn.classList.add('hidden')).catch(()=>btn.classList.remove('hidden'));}
+tryPlay();
+const unlock=()=>{tryPlay();window.removeEventListener('touchstart',unlock);window.removeEventListener('click',unlock);};
+window.addEventListener('touchstart',unlock,{once:true});window.addEventListener('click',unlock,{once:true});
+btn.addEventListener('click',tryPlay);
 </script>
 </body>
 </html>

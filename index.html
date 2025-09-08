@@ -16,16 +16,12 @@
   html,body{height:100%}
   body{margin:0;background:#07060a;color:#fff;font-family:"Segoe UI",system-ui,-apple-system,Arial,"Noto Color Emoji",sans-serif;overflow:hidden}
 
-  /* fireworks bg */
-  canvas#fx{position:fixed;inset:0;z-index:0;
-    background: radial-gradient(circle at 50% 15%, #1a132b 0%, #0c0b12 60%, #07060a 100%);
-  }
+  canvas#fx{position:fixed;inset:0;z-index:0;background:radial-gradient(circle at 50% 15%,#1a132b 0%,#0c0b12 60%,#07060a 100%)}
 
   .stage{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;padding:16px 16px 120px}
   .hdr{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center;margin-top:6px}
   .title{margin:0;font-weight:900;letter-spacing:.4px;font-size:clamp(22px,4.8vw,46px);
-    background:var(--grad);background-size:1200% 1200%;
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background:var(--grad);background-size:1200% 1200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
     animation:grad 12s ease infinite;text-shadow:0 0 24px rgba(255,255,255,.18)}
   .count{padding:.35rem .7rem;border:1px solid rgba(255,255,255,.2);border-radius:999px;font-weight:600;font-size:14px;opacity:.85;backdrop-filter:blur(6px);background:rgba(255,255,255,.06)}
   @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -37,35 +33,28 @@
   .panel{width:min(960px,94vw);margin-top:14px;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:var(--br);padding:16px;flex:1 1 auto;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.35) inset,0 10px 30px rgba(0,0,0,.25)}
 
   .lead{text-align:center;margin:2px 0 14px 0;font-weight:900;font-size:var(--font-lead);
-    background:var(--grad);background-size:1200% 1200%;
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background:var(--grad);background-size:1200% 1200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
     animation:grad 14s ease infinite;text-shadow:0 0 18px rgba(255,255,255,.2)}
 
-  /* === GRID 2 cột: mỗi hàng 2 ô -> luôn thẳng cột === */
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 22px;
-    align-items:start; /* ô trong hàng bám đỉnh */
-  }
-  @media (max-width:700px){
-    .grid{ grid-template-columns:1fr; }
-  }
+  /* GRID 2 cột: mỗi hàng 2 ô (thẳng cột) */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;align-items:start}
+  @media (max-width:700px){.grid{grid-template-columns:1fr}}
 
   .wish{
     font-size:var(--font-wish);font-weight:800;line-height:1.25;letter-spacing:.35px;
     background:var(--grad);background-size:1200% 1200%;
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    animation:grad 16s ease infinite;
-    text-shadow:0 0 18px rgba(255,255,255,.18);
+    animation:grad 16s ease infinite;text-shadow:0 0 18px rgba(255,255,255,.18);
     opacity:0;transform:translateY(10px) scale(.98);
     padding:2px 6px;white-space:normal;word-break:break-word;text-align:left
   }
   .wish.rtl{direction:rtl;text-align:right}
   .wish.in{animation:fadeIn .5s ease forwards}
+  /* spacer ẩn dùng để đủ 2 ô/hàng */
+  .spacer{visibility:hidden}
+
   @keyframes fadeIn{to{opacity:1;transform:translateY(0) scale(1)}}
 
-  /* cake */
   .cake{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:min(360px,70vw);z-index:1;opacity:.95}
   .flame{transform-origin:center;animation:flame .9s ease-in-out infinite}
   @keyframes flame{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.06) translateY(-1px)}}
@@ -95,7 +84,7 @@
     </div>
   </div>
 
-  <!-- bánh -->
+  <!-- Bánh -->
   <svg class="cake" viewBox="0 0 600 220" aria-hidden="true">
     <ellipse cx="300" cy="200" rx="220" ry="16" fill="rgba(255,255,255,.08)"/>
     <rect x="120" y="110" width="360" height="70" rx="14" fill="#ffb3c1"/>
@@ -107,14 +96,14 @@
     </g>
   </svg>
 
-  <!-- nhạc -->
+  <!-- Nhạc -->
   <audio id="bgm" autoplay loop playsinline preload="auto">
     <source src="https://cdn.jsdelivr.net/gh/anhvu1411/HPBD-@main/happy-birthday-ukulele-version-339062.mp3" type="audio/mpeg">
   </audio>
   <button id="soundBtn" class="sound-btn hidden">🔊 Tap for music</button>
 
 <script>
-/* 28 câu chúc */
+/* 28 câu – RTL được rải giữa nửa phải */
 const LIST = [
   { t:"Happy Birthday, Lucy"},{t:"Joyeux anniversaire, Lucy"},
   {t:"Feliz cumpleaños, Lucy"},{t:"Buon compleanno, Lucy"},
@@ -122,26 +111,34 @@ const LIST = [
   {t:"जन्मदिन मुबारक हो, लूसी"},{t:"Doğum günün kutlu olsun, Lucy"},
   {t:"Selamat hari jadi, Lucy"},{t:"Grattis på födelsedagen, Lucy"},
   {t:"Palju õnne sünnipäevaks, Lucy"},{t:"Sto lat, Lucy"},
-  {t:"Alles Gute zum Geburtstag, Lucy"},{t:"Feliz aniversário, Lucy"},
-  {t:"С днём рождения, Люси"},{t:"生日快樂，露西"},
-  {t:"생일 축하해, 루시"},{t:"শুভ জন্মদিন, লুসি"},
-  {t:"สุขสันต์วันเกิด, ลูซี่"},{t:"Χαρούμενα γενέθλια, Λούσι"},
-  {t:"Selamat ulang tahun, Lucy"},{t:"Všechno nejlepší k narozeninám, Lucy"},
-  {t:"Hyvää syntymäpäivää, Lucy"},{t:"Boldog születésnapot, Lucy"},
-  {t:"La mulți ani, Lucy"},
-  {t:"יום הולדת שמח, לוסי", rtl:true},
-  {t:"تولدت مبارک، لوسی", rtl:true},
-  {t:"عيد ميلاد سعيد، لوسي", rtl:true}
+  {t:"Alles Gute zum Geburtstag, Lucy"},
+  {t:"Feliz aniversário, Lucy"},
+
+  /* nửa phải – đã trộn RTL vào giữa để không dồn đáy */
+  {t:"С днём рождения, Люси"},
+  {t:"生日快樂，露西"},
+  {t:"יום הולדת שמח, לוסי", rtl:true},   // RTL 1
+  {t:"생일 축하해, 루시"},
+  {t:"תولدت مبارک، لوسی", rtl:true},     // RTL 2
+  {t:"শুভ জন্মদিন, লুসি"},
+  {t:"สุขสันต์วันเกิด, ลูซี่"},
+  {t:"Χαρούμενα γενέθλια, Λούσι"},
+  {t:"Selamat ulang tahun, Lucy"},
+  {t:"Všechno nejlepší k narozeninám, Lucy"},
+  {t:"عيد ميلاد سعيد، لوسي", rtl:true},   // RTL 3
+  {t:"Hyvää syntymäpäivää, Lucy"},
+  {t:"Boldog születésnapot, Lucy"},
+  {t:"La mulți ani, Lucy"}
 ]; // 28
 
-/* ========== GRID theo hàng: mỗi hàng 2 ô ========== */
+/* GRID theo hàng: luôn đủ 2 ô/hàng nhờ spacer */
 const grid = document.getElementById('grid');
 const panel = document.getElementById('panel');
 const countEl = document.getElementById('count');
 
 const HALF = Math.ceil(LIST.length/2);
-const LEFT = LIST.slice(0, HALF);
-const RIGHT = LIST.slice(HALF); // 14 & 14
+const LEFT = LIST.slice(0, HALF);       // 14
+const RIGHT = LIST.slice(HALF);          // 14
 
 let row = 0, running=false, revealAll=false;
 
@@ -152,16 +149,25 @@ function makeWish(item){
   d.textContent=(item?.t||'').trim();
   return d;
 }
+function makeSpacer(){
+  const d=document.createElement('div');
+  d.className='wish spacer';
+  d.textContent='.';
+  return d;
+}
 function updateCount(){ countEl.textContent = `${1 + grid.children.length} / 29`; }
 
 function addRow(){
   const l = LEFT[row], r = RIGHT[row];
-  if(l){ const el=makeWish(l); grid.appendChild(el); requestAnimationFrame(()=>el.classList.add('in')); }
-  if(r){ const er=makeWish(r); grid.appendChild(er); requestAnimationFrame(()=>er.classList.add('in')); }
+  const el = l ? makeWish(l) : makeSpacer();
+  const er = r ? makeWish(r) : makeSpacer();
+  grid.append(el, er);
+  requestAnimationFrame(()=>{ el.classList.add('in'); er.classList.add('in'); });
   panel.scrollTop = panel.scrollHeight;
   updateCount();
   row++;
 }
+
 async function play(){
   if(running) return; running=true;
   while(row < Math.max(LEFT.length, RIGHT.length)){
@@ -171,21 +177,21 @@ async function play(){
   running=false;
 }
 
-/* nút */
+/* Nút */
 document.getElementById('skip').onclick=()=>{ if(row<Math.max(LEFT.length,RIGHT.length)) addRow(); if(!running) play(); };
 document.getElementById('showAll').onclick=()=>{ revealAll=true; if(!running) play(); };
 document.getElementById('replay').onclick=()=>{ row=0; revealAll=false; running=false; grid.innerHTML=''; updateCount(); play(); };
 
 updateCount(); play();
 
-/* fireworks */
+/* Fireworks */
 const c=document.getElementById('fx'),ctx=c.getContext('2d',{alpha:true});let W,H,dpr=Math.min(devicePixelRatio||1,2);
 function resize(){W=c.width=Math.floor(innerWidth*dpr);H=c.height=Math.floor(innerHeight*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}addEventListener('resize',resize);resize();
 const sparks=[],palette=['#ff4d6d','#f7aef8','#9b5de5','#00bbf9','#00f5d4','#ffd166','#ff9f1c'];
 function burst(x,y){const N=60+Math.random()*40;for(let i=0;i<N;i++){const a=Math.random()*Math.PI*2,v=2+Math.random()*4;sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,life:60+Math.random()*30,age:0,color:palette[(Math.random()*palette.length)|0]});}}
 function loop(){ctx.fillStyle='rgba(7,6,10,.25)';ctx.fillRect(0,0,innerWidth,innerHeight);for(let i=sparks.length-1;i>=0;i--){const p=sparks[i];p.age++;p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;const t=1-p.age/p.life;if(t<=0){sparks.splice(i,1);continue;}ctx.beginPath();ctx.arc(p.x,p.y,2.2*t+0.6,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(t,.15);ctx.fill();ctx.globalAlpha=1;}requestAnimationFrame(loop);}loop();setInterval(()=>burst(Math.random()*innerWidth,innerHeight*(.25+.5*Math.random())),1100);addEventListener('click',e=>burst(e.clientX,e.clientY));addEventListener('touchstart',e=>{const t=e.touches[0];burst(t.clientX,t.clientY)},{passive:true});
 
-/* audio autoplay */
+/* Audio autoplay */
 const audio=document.getElementById('bgm'),btn=document.getElementById('soundBtn');audio.volume=.7;
 function tryPlay(){return audio.play().then(()=>btn.classList.add('hidden')).catch(()=>btn.classList.remove('hidden'));}
 tryPlay();

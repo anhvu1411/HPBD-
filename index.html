@@ -39,24 +39,46 @@
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     animation:grad 14s ease infinite;text-shadow:0 0 18px rgba(255,255,255,.2)}
 
-  /* ===== Hàng–ô: mỗi hàng 2 cell → luôn thẳng cột ===== */
-  .list { display:flex; flex-direction:column; gap:12px; }
-  .row  { display:flex; gap:22px; align-items:stretch; }
-  .cell { flex:1 1 0; min-width:0; display:flex; }
+  /* ===== TABLE LAYOUT: thẳng tuyệt đối ===== */
+  .list{
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+  }
+  .row{
+    display: table-row;
+  }
+  .cell{
+    display: table-cell;
+    width: 50%;
+    padding-right: 11px;
+    vertical-align: top;
+  }
 
   .wish{
-    font-size:var(--font-wish);font-weight:800;line-height:1.25;letter-spacing:.35px;
-    background:var(--grad);background-size:1200% 1200%;
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    animation:grad 16s ease infinite;
-    text-shadow:0 0 18px rgba(255,255,255,.18);
-    opacity:0;transform:translateY(10px) scale(.98);
-    padding:4px 6px;white-space:normal;word-break:break-word;text-align:left;
-    width:100%;display:block;
+    display: block;
+    width: 100%;
+    font-size: var(--font-wish);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: .35px;
+    background: var(--grad);
+    background-size: 1200% 1200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: grad 16s ease infinite;
+    text-shadow: 0 0 18px rgba(255,255,255,.18);
+    opacity: 0;
+    transform: translateY(10px) scale(.98);
+    padding: 4px 6px;
+    white-space: normal;
+    word-break: break-word;
+    text-align: left;
   }
-  .wish.rtl{direction:rtl;text-align:right}
-  .wish.in{animation:fadeIn .5s ease forwards}
-  .spacer{visibility:hidden}
+  .wish.rtl{ direction: rtl; text-align: right; }
+  .wish.in{ animation: fadeIn .5s ease forwards; }
+  .spacer{ visibility: hidden; }
 
   @keyframes fadeIn{to{opacity:1;transform:translateY(0) scale(1)}}
 
@@ -109,7 +131,6 @@
   <button id="soundBtn" class="sound-btn hidden">🔊 Tap for music</button>
 
 <script>
-/* 28 câu – rải 3 câu RTL vào giữa nửa phải */
 const LIST = [
   { t:"Happy Birthday, Lucy"},{t:"Joyeux anniversaire, Lucy"},
   {t:"Feliz cumpleaños, Lucy"},{t:"Buon compleanno, Lucy"},
@@ -117,34 +138,30 @@ const LIST = [
   {t:"जन्मदिन मुबारक हो, लूसी"},{t:"Doğum günün kutlu olsun, Lucy"},
   {t:"Selamat hari jadi, Lucy"},{t:"Grattis på födelsedagen, Lucy"},
   {t:"Palju õnne sünnipäevaks, Lucy"},{t:"Sto lat, Lucy"},
-  {t:"Alles Gute zum Geburtstag, Lucy"},
-  {t:"Feliz aniversário, Lucy"},
-
-  // Right half (14) – mix RTL inside to avoid bunching at bottom
+  {t:"Alles Gute zum Geburtstag, Lucy"},{t:"Feliz aniversário, Lucy"},
   {t:"С днём рождения, Люси"},
   {t:"生日快樂，露西"},
-  {t:"יום הולדת שמח, לוסי", rtl:true},   // RTL 1
+  {t:"יום הולדת שמח, לוסי", rtl:true},
   {t:"생일 축하해, 루시"},
-  {t:"تولدت مبارک، لوسی", rtl:true},     // RTL 2
+  {t:"تولدت مبارک، لوسی", rtl:true},
   {t:"শুভ জন্মদিন, লুসি"},
   {t:"สุขสันต์วันเกิด, ลูซี่"},
   {t:"Χαρούμενα γενέθλια, Λούσι"},
-  {t:"Selamat ulang năm, Lucy".replace("năm","tahun")}, // small fix
+  {t:"Selamat ulang tahun, Lucy"},
   {t:"Všechno nejlepší k narozeninám, Lucy"},
-  {t:"عيد ميلاد سعيد، لوسي", rtl:true},   // RTL 3
+  {t:"عيد ميلاد سعيد، لوسي", rtl:true},
   {t:"Hyvää syntymäpäivää, Lucy"},
   {t:"Boldog születésnapot, Lucy"},
   {t:"La mulți ani, Lucy"}
-]; // 28
+]; // 28 + câu lead = 29
 
-/* Hàng–ô: luôn đủ 2 cell/hàng nhờ spacer */
 const list = document.getElementById('list');
 const panel = document.getElementById('panel');
 const countEl = document.getElementById('count');
 
 const HALF = Math.ceil(LIST.length/2);
-const LEFT  = LIST.slice(0, HALF);   // 14
-const RIGHT = LIST.slice(HALF);      // 14
+const LEFT  = LIST.slice(0, HALF);
+const RIGHT = LIST.slice(HALF);
 
 let row = 0, running=false, revealAll=false;
 

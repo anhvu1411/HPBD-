@@ -16,12 +16,14 @@
   html,body{height:100%}
   body{margin:0;background:#07060a;color:#fff;font-family:"Segoe UI",system-ui,-apple-system,Arial,"Noto Color Emoji",sans-serif;overflow:hidden}
 
+  /* fireworks bg */
   canvas#fx{position:fixed;inset:0;z-index:0;background:radial-gradient(circle at 50% 15%,#1a132b 0%,#0c0b12 60%,#07060a 100%)}
 
   .stage{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;padding:16px 16px 120px}
   .hdr{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center;margin-top:6px}
   .title{margin:0;font-weight:900;letter-spacing:.4px;font-size:clamp(22px,4.8vw,46px);
-    background:var(--grad);background-size:1200% 1200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background:var(--grad);background-size:1200% 1200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     animation:grad 12s ease infinite;text-shadow:0 0 24px rgba(255,255,255,.18)}
   .count{padding:.35rem .7rem;border:1px solid rgba(255,255,255,.2);border-radius:999px;font-weight:600;font-size:14px;opacity:.85;backdrop-filter:blur(6px);background:rgba(255,255,255,.06)}
   @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -33,28 +35,32 @@
   .panel{width:min(960px,94vw);margin-top:14px;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:var(--br);padding:16px;flex:1 1 auto;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.35) inset,0 10px 30px rgba(0,0,0,.25)}
 
   .lead{text-align:center;margin:2px 0 14px 0;font-weight:900;font-size:var(--font-lead);
-    background:var(--grad);background-size:1200% 1200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background:var(--grad);background-size:1200% 1200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     animation:grad 14s ease infinite;text-shadow:0 0 18px rgba(255,255,255,.2)}
 
-  /* GRID 2 cột: mỗi hàng 2 ô (thẳng cột) */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;align-items:start}
-  @media (max-width:700px){.grid{grid-template-columns:1fr}}
+  /* ===== Hàng–ô: mỗi hàng 2 cell → luôn thẳng cột ===== */
+  .list { display:flex; flex-direction:column; gap:12px; }
+  .row  { display:flex; gap:22px; align-items:stretch; }
+  .cell { flex:1 1 0; min-width:0; display:flex; }
 
   .wish{
     font-size:var(--font-wish);font-weight:800;line-height:1.25;letter-spacing:.35px;
     background:var(--grad);background-size:1200% 1200%;
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    animation:grad 16s ease infinite;text-shadow:0 0 18px rgba(255,255,255,.18);
+    animation:grad 16s ease infinite;
+    text-shadow:0 0 18px rgba(255,255,255,.18);
     opacity:0;transform:translateY(10px) scale(.98);
-    padding:2px 6px;white-space:normal;word-break:break-word;text-align:left
+    padding:4px 6px;white-space:normal;word-break:break-word;text-align:left;
+    width:100%;display:block;
   }
   .wish.rtl{direction:rtl;text-align:right}
   .wish.in{animation:fadeIn .5s ease forwards}
-  /* spacer ẩn dùng để đủ 2 ô/hàng */
   .spacer{visibility:hidden}
 
   @keyframes fadeIn{to{opacity:1;transform:translateY(0) scale(1)}}
 
+  /* cake */
   .cake{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:min(360px,70vw);z-index:1;opacity:.95}
   .flame{transform-origin:center;animation:flame .9s ease-in-out infinite}
   @keyframes flame{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.06) translateY(-1px)}}
@@ -80,11 +86,11 @@
 
     <div class="panel" id="panel">
       <div class="lead">Chúc mừng sinh nhật, Lucy</div>
-      <div id="grid" class="grid"></div>
+      <div id="list" class="list"></div>
     </div>
   </div>
 
-  <!-- Bánh -->
+  <!-- cake -->
   <svg class="cake" viewBox="0 0 600 220" aria-hidden="true">
     <ellipse cx="300" cy="200" rx="220" ry="16" fill="rgba(255,255,255,.08)"/>
     <rect x="120" y="110" width="360" height="70" rx="14" fill="#ffb3c1"/>
@@ -96,14 +102,14 @@
     </g>
   </svg>
 
-  <!-- Nhạc -->
+  <!-- audio -->
   <audio id="bgm" autoplay loop playsinline preload="auto">
     <source src="https://cdn.jsdelivr.net/gh/anhvu1411/HPBD-@main/happy-birthday-ukulele-version-339062.mp3" type="audio/mpeg">
   </audio>
   <button id="soundBtn" class="sound-btn hidden">🔊 Tap for music</button>
 
 <script>
-/* 28 câu – RTL được rải giữa nửa phải */
+/* 28 câu – rải 3 câu RTL vào giữa nửa phải */
 const LIST = [
   { t:"Happy Birthday, Lucy"},{t:"Joyeux anniversaire, Lucy"},
   {t:"Feliz cumpleaños, Lucy"},{t:"Buon compleanno, Lucy"},
@@ -114,16 +120,16 @@ const LIST = [
   {t:"Alles Gute zum Geburtstag, Lucy"},
   {t:"Feliz aniversário, Lucy"},
 
-  /* nửa phải – đã trộn RTL vào giữa để không dồn đáy */
+  // Right half (14) – mix RTL inside to avoid bunching at bottom
   {t:"С днём рождения, Люси"},
   {t:"生日快樂，露西"},
   {t:"יום הולדת שמח, לוסי", rtl:true},   // RTL 1
   {t:"생일 축하해, 루시"},
-  {t:"תولدت مبارک، لوسی", rtl:true},     // RTL 2
+  {t:"تولدت مبارک، لوسی", rtl:true},     // RTL 2
   {t:"শুভ জন্মদিন, লুসি"},
   {t:"สุขสันต์วันเกิด, ลูซี่"},
   {t:"Χαρούμενα γενέθλια, Λούσι"},
-  {t:"Selamat ulang tahun, Lucy"},
+  {t:"Selamat ulang năm, Lucy".replace("năm","tahun")}, // small fix
   {t:"Všechno nejlepší k narozeninám, Lucy"},
   {t:"عيد ميلاد سعيد، لوسي", rtl:true},   // RTL 3
   {t:"Hyvää syntymäpäivää, Lucy"},
@@ -131,14 +137,14 @@ const LIST = [
   {t:"La mulți ani, Lucy"}
 ]; // 28
 
-/* GRID theo hàng: luôn đủ 2 ô/hàng nhờ spacer */
-const grid = document.getElementById('grid');
+/* Hàng–ô: luôn đủ 2 cell/hàng nhờ spacer */
+const list = document.getElementById('list');
 const panel = document.getElementById('panel');
 const countEl = document.getElementById('count');
 
 const HALF = Math.ceil(LIST.length/2);
-const LEFT = LIST.slice(0, HALF);       // 14
-const RIGHT = LIST.slice(HALF);          // 14
+const LEFT  = LIST.slice(0, HALF);   // 14
+const RIGHT = LIST.slice(HALF);      // 14
 
 let row = 0, running=false, revealAll=false;
 
@@ -155,32 +161,45 @@ function makeSpacer(){
   d.textContent='.';
   return d;
 }
-function updateCount(){ countEl.textContent = `${1 + grid.children.length} / 29`; }
-
+function updateCount(){
+  const shown = 1 + list.querySelectorAll('.wish:not(.spacer)').length;
+  countEl.textContent = `${shown} / 29`;
+}
 function addRow(){
   const l = LEFT[row], r = RIGHT[row];
-  const el = l ? makeWish(l) : makeSpacer();
-  const er = r ? makeWish(r) : makeSpacer();
-  grid.append(el, er);
-  requestAnimationFrame(()=>{ el.classList.add('in'); er.classList.add('in'); });
+
+  const rowDiv = document.createElement('div'); rowDiv.className='row';
+  const cellL = document.createElement('div'); cellL.className='cell';
+  const cellR = document.createElement('div'); cellR.className='cell';
+
+  const wl = l ? makeWish(l) : makeSpacer();
+  const wr = r ? makeWish(r) : makeSpacer();
+
+  cellL.appendChild(wl); cellR.appendChild(wr);
+  rowDiv.append(cellL, cellR);
+  list.appendChild(rowDiv);
+
+  requestAnimationFrame(()=>{ wl.classList.add('in'); wr.classList.add('in'); });
+
   panel.scrollTop = panel.scrollHeight;
   updateCount();
   row++;
 }
-
 async function play(){
-  if(running) return; running=true;
+  if(running) return; running = true;
   while(row < Math.max(LEFT.length, RIGHT.length)){
     addRow();
     if(!revealAll) await new Promise(r=>setTimeout(r,700));
   }
-  running=false;
+  running = false;
 }
 
-/* Nút */
-document.getElementById('skip').onclick=()=>{ if(row<Math.max(LEFT.length,RIGHT.length)) addRow(); if(!running) play(); };
-document.getElementById('showAll').onclick=()=>{ revealAll=true; if(!running) play(); };
-document.getElementById('replay').onclick=()=>{ row=0; revealAll=false; running=false; grid.innerHTML=''; updateCount(); play(); };
+/* Controls */
+document.getElementById('skip').onclick   = ()=>{ if(row<Math.max(LEFT.length,RIGHT.length)) addRow(); if(!running) play(); };
+document.getElementById('showAll').onclick= ()=>{ revealAll = true; if(!running) play(); };
+document.getElementById('replay').onclick = ()=>{
+  row=0; revealAll=false; running=false; list.innerHTML=''; updateCount(); play();
+};
 
 updateCount(); play();
 
